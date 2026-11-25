@@ -5,6 +5,15 @@ import { dirname } from "node:path";
 const joke =
   "My standing desk is the only thing in this office that ever stands up for me.";
 
+// The competition gate requires an entry of 1-200 characters: refuse to
+// write anything empty/whitespace-only or longer than 200 characters.
+if (joke.trim().length === 0 || joke.length > 200) {
+  console.error(
+    `Invalid entry: joke must be 1-200 characters, got ${joke.length}.`,
+  );
+  process.exit(1);
+}
+
 const outputPath = process.env.OUTPUT_PATH ?? "/output/entry.txt";
 mkdirSync(dirname(outputPath), { recursive: true });
 writeFileSync(outputPath, joke + "\n", "utf8");
